@@ -11,6 +11,8 @@
 
 var _ = require('lodash');
 var Stock = require('./stock.model');
+var yahooFinance = require('yahoo-finance');
+var moment = require('moment');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -66,6 +68,21 @@ exports.index = function(req, res) {
   })
 };
 
+exports.getHistoStock = function (req, res) {
+  var to = moment().format('YYYY-MM-DD');
+  var from = moment().subtract(365, 'days').format('YYYY-MM-DD');
+  yahooFinance.historical({
+    symbol: req.params.id,
+    from: from,
+    to: to
+  }, function (err, quotes) {
+    if(quotes){
+      res.status(200).json(quotes);
+    }else(
+      handleError(res, 404)
+    )
+  });
+};
 // Gets a single Stock from the DB
 exports.show = function(req, res) {
   Stock.getSnapshot(req.params.id, function(err, snapshot){
