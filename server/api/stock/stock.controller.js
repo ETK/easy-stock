@@ -61,17 +61,16 @@ function removeEntity(res) {
 
 // Gets a list of Stocks
 exports.index = function(req, res) {
-  Stock.findAsync()
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+  Stock.getSnapshots(function(err, snapshots){
+    res.status(200).json(snapshots);
+  })
 };
 
 // Gets a single Stock from the DB
 exports.show = function(req, res) {
-  Stock.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+  Stock.getSnapshot(req.params.id, function(err, snapshot){
+    res.status(200).json(snapshot);
+  })
 };
 
 // Creates a new Stock in the DB
