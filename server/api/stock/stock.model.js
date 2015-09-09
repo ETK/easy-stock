@@ -28,6 +28,11 @@ StockSchema.statics.getSnapshot = function (symbol, cb) {
       symbol: symbol
     }, function (err, snapshot) {
       var merge = _.assign(snapshot, stock);
+      _.forOwn(merge, function (val, key) {
+        if (!val || _.isObject(val)) {
+          delete snapshot[key];
+        }
+      });
       return cb(err, merge);
     });
   });
@@ -46,6 +51,11 @@ StockSchema.statics.getSnapshots = function (cb) {
         _.forEach(snapshots, function(snapshot){
           if(stock.symbol === snapshot.symbol){
             var merge = _.assign(snapshot, stock);
+            _.forOwn(merge, function (val, key) {
+              if (!val || _.isObject(val)) {
+                delete snapshot[key];
+              }
+            });
             response.push(merge);
           }
         })
