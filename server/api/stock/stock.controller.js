@@ -69,12 +69,12 @@ exports.index = function(req, res) {
 };
 
 exports.getHistoStock = function (req, res) {
-  var to = moment().format('YYYY-MM-DD');
-  var from = moment().subtract(365, 'days').format('YYYY-MM-DD');
+  var to = moment(req.body.to).format('YYYY-MM-DD');
+  var from = moment(req.body.from).subtract(365, 'days').format('YYYY-MM-DD');
   yahooFinance.historical({
-    symbol: req.params.id,
-    from: from,
-    to: to
+    symbol: req.body.symbol,
+    from: req.body.from,
+    to: req.body.to
   }, function (err, quotes) {
     if(quotes){
       res.status(200).json(quotes);
@@ -97,17 +97,6 @@ exports.create = function(req, res) {
     .catch(handleError(res));
 };
 
-// Updates an existing Stock in the DB
-exports.update = function(req, res) {
-  if (req.body._id) {
-    delete req.body._id;
-  }
-  Stock.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(saveUpdates(req.body))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
-};
 
 // Deletes a Stock from the DB
 exports.destroy = function(req, res) {

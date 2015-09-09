@@ -5,6 +5,9 @@ angular.module('easyStockApp')
     $scope.menu = [{
       'title': 'Home',
       'state': 'main'
+    },{
+      'title': 'Search',
+      'state': 'search'
     }];
 
     $scope.isCollapsed = true;
