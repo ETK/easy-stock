@@ -23,9 +23,10 @@ angular.module('easyStockApp')
           angular.forEach(response.series, function (key) {
             var ligne = [];
             angular.forEach(data, function (quote) {
-              ligne.push(quote[key].toFixed(0));
-              if(response.labels.indexOf(quote.date) === -1){
-                response.labels.push(quote.date.toLocaleString())
+              ligne.push(quote[key]);
+              var date = quote.date.toString().substr(0, 10);
+              if(response.labels.indexOf(date) === -1){
+                response.labels.push(date)
               }
             });
             response.data.push(ligne);
