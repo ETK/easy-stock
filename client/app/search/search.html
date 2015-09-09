@@ -1,1 +1,20 @@
-<div>This is the search view.</div>
+<div class="container" ng-controller="SearchCtrl as main">
+  <form ng-submit="main.getQuote(main.symbol, main.date)">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input ng-model="main.symbol" type="text" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-default">Go!</button>
+      </span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <input date-range-picker class="form-control date-picker" max="main.maxDate" type="text" ng-model="main.date"/>
+    </div>
+  </form>
+
+  <canvas id="line" class="chart chart-line" chart-data="main.quotes.data"
+          chart-labels="main.quotes.labels" chart-legend="true" chart-series="main.quotes.series">
+  </canvas>
+
+</div>

@@ -69,12 +69,12 @@ exports.index = function(req, res) {
 };
 
 exports.getHistoStock = function (req, res) {
-  var to = moment().format('YYYY-MM-DD');
-  var from = moment().subtract(365, 'days').format('YYYY-MM-DD');
+  var to = moment(req.body.to).format('YYYY-MM-DD');
+  var from = moment(req.body.from).subtract(365, 'days').format('YYYY-MM-DD');
   yahooFinance.historical({
-    symbol: req.params.id,
-    from: from,
-    to: to
+    symbol: req.body.symbol,
+    from: req.body.from,
+    to: req.body.to
   }, function (err, quotes) {
     if(quotes){
       res.status(200).json(quotes);

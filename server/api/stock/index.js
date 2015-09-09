@@ -9,6 +9,6 @@ router.get('/', controller.index);
 router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.delete('/:id', controller.destroy);
-router.get('/search/:id', controller.getHistoStock);
+router.post('/search', controller.getHistoStock);
 
 module.exports = router;
