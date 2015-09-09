@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('easyStockApp')
-  .controller('SearchCtrl', function (Stocks, $log) {
+  .controller('SearchCtrl', function (Stocks) {
     var vm = this;
     vm.maxDate = new Date();
     vm.quotes = [];
@@ -14,7 +14,6 @@ angular.module('easyStockApp')
           to: date.endDate
         },
         function (quotes) {
-          $log.debug(quotes);
           vm.quotes = quotes;
         })
     }

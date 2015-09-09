@@ -12,8 +12,6 @@ angular.module('easyStockApp')
         transformResponse: function (data) {
           var escapeDataFields = ['symbol', 'date', 'volume'];
           data = angular.fromJson(data);
-          console.log(data[0]);
-          console.log(data[1]);
           var response = {};
           response.series = Object.keys(data[0]).filter(function (value) {
             if (escapeDataFields.indexOf(value) === -1) return value;
