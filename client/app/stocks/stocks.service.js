@@ -6,7 +6,7 @@ angular.module('easyStockApp')
       'query': {method: 'GET', isArray: true},
       'get': {method: 'GET'},
       'remove': {method: 'DELETE'},
-      'search': {
+      'getChart': {
         method: 'POST',
         url: 'api/stocks/search/',
         transformResponse: function (data) {

@@ -8,7 +8,7 @@ angular.module('easyStockApp')
 
     vm.getQuote = function (symbol, date) {
       delete vm.quotes;
-      Stocks.search({
+      Stocks.getChart({
           symbol: symbol,
           from: date.startDate,
           to: date.endDate
