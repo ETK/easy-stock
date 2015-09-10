@@ -5,6 +5,7 @@ angular.module('easyStockApp')
     $stateProvider
       .state('search', {
         url: '/search?symbol',
-        templateUrl: 'app/search/search.html'
+        templateUrl: 'app/search/search.html',
+        reloadOnSearch : false
       });
   });

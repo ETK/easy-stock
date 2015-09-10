@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('easyStockApp')
-  .controller('SearchCtrl', function (Stocks, $stateParams) {
+  .controller('SearchCtrl', function (Stocks, $stateParams, $state) {
     var vm = this;
     vm.maxDate = new Date();
     vm.quotes = [];
@@ -22,7 +22,6 @@ angular.module('easyStockApp')
 
     vm.getQuote = function (symbol) {
       delete vm.quote;
-      symbol = $stateParams.symbol || symbol;
       Stocks.get({id: symbol}, function (quote) {
         vm.quote = quote;
       }, function (err) {
@@ -47,6 +46,7 @@ angular.module('easyStockApp')
 
 
     vm.loadData = function (symbol, date) {
+      $state.go('.',{symbol:symbol});
       if (date) {
         vm.getQuotes(symbol, date);
       }
@@ -54,7 +54,7 @@ angular.module('easyStockApp')
     };
 
     if ($stateParams && $stateParams.symbol) {
-      vm.getQuote($stateParams.symbol.toString());
       vm.symbol = $stateParams.symbol;
+      vm.getQuote($stateParams.symbol.toString());
     }
   });
