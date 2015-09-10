@@ -22,15 +22,17 @@
     <div class="col-lg-4 col-md-4">
       <stock-view title="main.symbol" data="main.quote"></stock-view>
     </div>
-    <div class="col-lg-4 col-md-8">
-      <canvas id="line" class="chart chart-line" chart-data="main.quotes.data"
-              chart-labels="main.quotes.labels" chart-legend="true" chart-series="main.quotes.series">
-      </canvas>
-    </div>
-    <div class="col-lg-4 col-md-8">
-      <canvas id="bar" class="chart chart-bar"
-              chart-data="main.quotes.volumes" chart-labels="main.quotes.labels">
-      </canvas>
+    <div class="col-lg-8 col-md-8">
+      <div class="col-lg-12 col-md-12">
+        <canvas id="line" class="chart chart-line" chart-data="main.quotes.data"
+                chart-labels="main.quotes.labels" chart-legend="true" chart-series="main.quotes.series">
+        </canvas>
+      </div>
+      <div class="col-lg-12 col-md-12">
+        <canvas id="bar" class="chart chart-bar"
+                chart-data="main.quotes.volumes" chart-labels="main.quotes.labels">
+        </canvas>
+      </div>
     </div>
   </div>
 </div>
