@@ -7,7 +7,8 @@ angular.module('easyStockApp', [
   'ui.router',
   'ui.bootstrap',
   'daterangepicker',
-  'chart.js'
+  'chart.js',
+  'ui.grid'
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
