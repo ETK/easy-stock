@@ -68,13 +68,22 @@ exports.index = function(req, res) {
   })
 };
 
+exports.getSnapSymbol = function (req, res) {
+  yahooFinance.snapshot({symbol: req.params.symbol}, function (err, snapshot) {
+    _.forOwn(snapshot, function (val, key) {
+      if (!val || _.isObject(val)) {
+        delete snapshot[key];
+      }
+    });
+    res.status(200).json(snapshot);
+  });
+};
+
 exports.getHistoStock = function (req, res) {
-  var to = moment(req.body.to).format('YYYY-MM-DD');
-  var from = moment(req.body.from).subtract(365, 'days').format('YYYY-MM-DD');
   yahooFinance.historical({
     symbol: req.body.symbol,
-    from: req.body.from,
-    to: req.body.to
+    from: req.body.from || moment().format('YYYY-MM-DD'),
+    to: req.body.to || moment().subtract(365, 'days').format('YYYY-MM-DD')
   }, function (err, quotes) {
     if(quotes){
       res.status(200).json(quotes);
@@ -86,7 +95,11 @@ exports.getHistoStock = function (req, res) {
 // Gets a single Stock from the DB
 exports.show = function(req, res) {
   Stock.getSnapshot(req.params.id, function(err, snapshot){
-    res.status(200).json(snapshot);
+    if(snapshot){
+      res.status(200).json(snapshot);
+    }else{
+      handleError(res, 404);
+    }
   })
 };
 

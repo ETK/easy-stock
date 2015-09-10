@@ -21,19 +21,32 @@ StockSchema.pre('save', function (next) {
   self.unitPriceSell = (self.buyNumber * self.buyPrice + (self.transactPrice * 2)) / self.buyNumber;
   next();
 });
-
+var displayField = ['lastTradePriceOnly', 'previousClose', 'epsEstimateNextQuarter', 'buyPrice', 'buyNumber', 'transactPrice', 'unitPrice', 'unitPriceSell'];
+var cleanObj = function (obj, display) {
+  _.forEach(Object.keys(obj), function (key) {
+    if (display.indexOf(key) === -1) {
+      delete obj[key];
+    }
+  });
+  return obj;
+};
 StockSchema.statics.getSnapshot = function (symbol, cb) {
   this.findOne({symbol: symbol}, function (err, stock) {
     yahooFinance.snapshot({
       symbol: symbol
     }, function (err, snapshot) {
-      var merge = _.assign(snapshot, stock);
-      _.forOwn(merge, function (val, key) {
-        if (!val || _.isObject(val)) {
-          delete snapshot[key];
-        }
-      });
-      return cb(err, merge);
+      var merge;
+      if(stock && snapshot){
+        merge = _.merge(snapshot, stock._doc);
+        _.forOwn(merge, function (val, key) {
+          if (!val || _.isObject(val)) {
+            delete snapshot[key];
+          }
+        });
+      }else if (!stock) {
+        merge = snapshot;
+      }
+      return cb(err, cleanObj(merge, displayField));
     });
   });
 };
@@ -50,13 +63,13 @@ StockSchema.statics.getSnapshots = function (cb) {
       _.forEach(stocks, function(stock){
         _.forEach(snapshots, function(snapshot){
           if(stock.symbol === snapshot.symbol){
-            var merge = _.assign(snapshot, stock);
+            var merge = _.assign(snapshot, stock._doc);
             _.forOwn(merge, function (val, key) {
               if (!val || _.isObject(val)) {
                 delete snapshot[key];
               }
             });
-            response.push(merge);
+            response.push(cleanObj(merge,displayField));
           }
         })
       });
