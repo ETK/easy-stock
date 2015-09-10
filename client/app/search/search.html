@@ -1,12 +1,25 @@
-<div class="container" ng-controller="SearchCtrl as main">
-  <form class="form-inline" ng-submit="main.getQuote(main.symbol, main.date)">
-    <input ng-model="main.symbol" type="text" class="form-control" placeholder="Search for..."/>
-    <input date-range-picker class="form-control date-picker" max="main.maxDate" type="text" ng-model="main.date"/>
-    <button type="submit" class="btn btn-info"><i class="glyphicon glyphicon-stats"></i></button>
-  </form>
+<div ng-controller="SearchCtrl as main">
+  <div class="container">
+    <form class="form-inline" ng-submit="main.getQuote(main.symbol, main.date)">
+      <input ng-model="main.symbol" type="text" class="form-control" placeholder="Search for..."/>
+      <input date-range-picker class="form-control date-picker" max="main.maxDate" type="text" ng-model="main.date"/>
+      <button type="submit" class="btn btn-info"><i class="glyphicon glyphicon-stats"></i></button>
+    </form>
+  </div>
+  <hr class="container">
   <div class="col-md-12">
-    <canvas id="line" class="chart chart-line" chart-data="main.quotes.data"
-            chart-labels="main.quotes.labels" chart-legend="true" chart-series="main.quotes.series">
-    </canvas>
+    <div class="col-md-4">
+      <stock-view title="main.symbol" data="main.quote"></stock-view>
+    </div>
+    <div class="col-md-4">
+      <canvas id="line" class="chart chart-line" chart-data="main.quotes.data"
+              chart-labels="main.quotes.labels" chart-legend="true" chart-series="main.quotes.series">
+      </canvas>
+    </div>
+    <div class="col-md-4">
+      <canvas id="bar" class="chart chart-bar"
+              chart-data="main.quotes.volumes" chart-labels="main.quotes.labels">
+      </canvas>
+    </div>
   </div>
 </div>

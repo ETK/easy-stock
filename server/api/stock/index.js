@@ -10,5 +10,6 @@ router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.delete('/:id', controller.destroy);
 router.post('/search', controller.getHistoStock);
+router.get('/snapshot/:symbol', controller.getSnapSymbol);
 
 module.exports = router;

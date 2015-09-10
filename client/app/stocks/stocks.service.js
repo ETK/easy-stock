@@ -4,8 +4,13 @@ angular.module('easyStockApp')
   .service('Stocks', function ($resource) {
     return $resource('api/stocks/:id', {}, {
       'query': {method: 'GET', isArray: true},
+      'save': {method: 'POST'},
       'get': {method: 'GET'},
       'remove': {method: 'DELETE'},
+      'getSnapshot': {
+        method: 'GET',
+        url: 'api/stocks/snapshot/:id'
+      },
       'getChart': {
         method: 'POST',
         url: 'api/stocks/search/',
@@ -18,8 +23,12 @@ angular.module('easyStockApp')
           });
           response.labels = [];
           response.data = [];
-
-
+          response.volumes = [];
+          var temp = [];
+          angular.forEach(data, function (quote) {
+            temp.push(quote.volume)
+          });
+          response.volumes.push(temp);
           angular.forEach(response.series, function (key) {
             var ligne = [];
             angular.forEach(data, function (quote) {

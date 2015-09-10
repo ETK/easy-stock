@@ -68,6 +68,17 @@ exports.index = function(req, res) {
   })
 };
 
+exports.getSnapSymbol = function (req, res) {
+  yahooFinance.snapshot({symbol: req.params.symbol}, function (err, snapshot) {
+    _.forOwn(snapshot, function (val, key) {
+      if (!val || _.isObject(val)) {
+        delete snapshot[key];
+      }
+    });
+    res.status(200).json(snapshot);
+  });
+};
+
 exports.getHistoStock = function (req, res) {
   var to = moment(req.body.to).format('YYYY-MM-DD');
   var from = moment(req.body.from).subtract(365, 'days').format('YYYY-MM-DD');
