@@ -27,7 +27,7 @@ StockSchema.statics.getSnapshot = function (symbol, cb) {
     yahooFinance.snapshot({
       symbol: symbol
     }, function (err, snapshot) {
-      var merge = _.assign(snapshot, stock);
+      var merge = _.merge(snapshot, stock._doc);
       _.forOwn(merge, function (val, key) {
         if (!val || _.isObject(val)) {
           delete snapshot[key];
@@ -50,7 +50,7 @@ StockSchema.statics.getSnapshots = function (cb) {
       _.forEach(stocks, function(stock){
         _.forEach(snapshots, function(snapshot){
           if(stock.symbol === snapshot.symbol){
-            var merge = _.assign(snapshot, stock);
+            var merge = _.assign(snapshot, stock._doc);
             _.forOwn(merge, function (val, key) {
               if (!val || _.isObject(val)) {
                 delete snapshot[key];

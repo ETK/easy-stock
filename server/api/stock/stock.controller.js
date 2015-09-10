@@ -97,7 +97,11 @@ exports.getHistoStock = function (req, res) {
 // Gets a single Stock from the DB
 exports.show = function(req, res) {
   Stock.getSnapshot(req.params.id, function(err, snapshot){
-    res.status(200).json(snapshot);
+    if(snapshot){
+      res.status(200).json(snapshot);
+    }else{
+      handleError(res, 404);
+    }
   })
 };
 
