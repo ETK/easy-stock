@@ -5,7 +5,9 @@ angular.module('easyStockApp')
     return $resource('api/stocks/:id', {}, {
       'query': {method: 'GET', isArray: true},
       'save': {method: 'POST'},
-      'get': {method: 'GET'},
+      'get': {
+        method: 'GET'
+      },
       'remove': {method: 'DELETE'},
       'getSnapshot': {
         method: 'GET',
@@ -34,7 +36,7 @@ angular.module('easyStockApp')
             angular.forEach(data, function (quote) {
               ligne.push(quote[key]);
               var date = quote.date.toString().substr(0, 10);
-              if(response.labels.indexOf(date) === -1){
+              if (response.labels.indexOf(date) === -1) {
                 response.labels.push(date)
               }
             });

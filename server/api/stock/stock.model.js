@@ -21,7 +21,15 @@ StockSchema.pre('save', function (next) {
   self.unitPriceSell = (self.buyNumber * self.buyPrice + (self.transactPrice * 2)) / self.buyNumber;
   next();
 });
-
+var displayField = ['lastTradePriceOnly', 'previousClose', 'epsEstimateNextQuarter', 'buyPrice', 'buyNumber', 'transactPrice', 'unitPrice', 'unitPriceSell'];
+var cleanObj = function (obj, display) {
+  _.forEach(Object.keys(obj), function (key) {
+    if (display.indexOf(key) === -1) {
+      delete obj[key];
+    }
+  });
+  return obj;
+};
 StockSchema.statics.getSnapshot = function (symbol, cb) {
   this.findOne({symbol: symbol}, function (err, stock) {
     yahooFinance.snapshot({
@@ -37,7 +45,7 @@ StockSchema.statics.getSnapshot = function (symbol, cb) {
       }else if (!stock) {
         merge = snapshot;
       }
-      return cb(err, merge);
+      return cb(err, cleanObj(merge, displayField));
     });
   });
 };
@@ -60,7 +68,7 @@ StockSchema.statics.getSnapshots = function (cb) {
                 delete snapshot[key];
               }
             });
-            response.push(merge);
+            response.push(cleanObj(merge,displayField));
           }
         })
       });

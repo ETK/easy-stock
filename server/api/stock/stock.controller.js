@@ -80,12 +80,10 @@ exports.getSnapSymbol = function (req, res) {
 };
 
 exports.getHistoStock = function (req, res) {
-  var to = moment(req.body.to).format('YYYY-MM-DD');
-  var from = moment(req.body.from).subtract(365, 'days').format('YYYY-MM-DD');
   yahooFinance.historical({
     symbol: req.body.symbol,
-    from: req.body.from,
-    to: req.body.to
+    from: req.body.from || moment().format('YYYY-MM-DD'),
+    to: req.body.to || moment().subtract(365, 'days').format('YYYY-MM-DD')
   }, function (err, quotes) {
     if(quotes){
       res.status(200).json(quotes);

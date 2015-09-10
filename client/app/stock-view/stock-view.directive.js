@@ -4,12 +4,10 @@ angular.module('easyStockApp')
   .directive('stockView', function () {
     return {
       templateUrl: 'app/stock-view/stock-view.html',
-      scope:{
+      scope: {
         title: '=',
         data: '='
       },
-      restrict: 'EA',
-      link: function (scope, element, attrs) {
-      }
+      restrict: 'EA'
     };
   });

@@ -34,11 +34,18 @@ angular.module('easyStockApp')
 
     vm.getQuotes = function (symbol, date) {
       delete vm.quotes;
-      Stocks.getChart({
+      if (date) {
+        symbol = {
           symbol: symbol,
           from: date.startDate,
           to: date.endDate
-        },
+        }
+      }else{
+        symbol = {
+          symbol: symbol
+        };
+      }
+      Stocks.getChart(symbol,
         function (quotes) {
           vm.quotes = quotes;
         })
@@ -46,15 +53,15 @@ angular.module('easyStockApp')
 
 
     vm.loadData = function (symbol, date) {
-      $state.go('.',{symbol:symbol});
-      if (date) {
-        vm.getQuotes(symbol, date);
-      }
+      $state.go('.', {symbol: symbol});
+      vm.getQuotes(symbol, date);
       vm.getQuote(symbol);
     };
 
     if ($stateParams && $stateParams.symbol) {
       vm.symbol = $stateParams.symbol;
-      vm.getQuote($stateParams.symbol.toString());
+      vm.loadData($stateParams.symbol.toString(), null);
     }
-  });
+  }
+)
+;
