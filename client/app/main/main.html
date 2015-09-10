@@ -1,1 +1,4 @@
-<h1>HelloWorld</h1>
+<div class="container" ng-controller="MainCtrl as main">
+  <button class="btn btn-info" ng-click="main.loadData()"><i class="glyphicon glyphicon-refresh"></i> </button>
+  <div ui-grid="{ data: main.stocks }" class="myGrid"></div>
+</div>
