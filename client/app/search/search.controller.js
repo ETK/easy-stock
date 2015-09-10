@@ -24,7 +24,7 @@ angular.module('easyStockApp')
       delete vm.quote;
       Stocks.get({id: symbol}, function (quote) {
         vm.quote = quote;
-      }, function (err) {
+      }, function () {
         Stocks.getSnapshot({id: symbol},
           function (quote) {
             vm.quote = quote;
@@ -39,7 +39,7 @@ angular.module('easyStockApp')
           symbol: symbol,
           from: date.startDate,
           to: date.endDate
-        }
+        };
       }else{
         symbol = {
           symbol: symbol
@@ -48,7 +48,7 @@ angular.module('easyStockApp')
       Stocks.getChart(symbol,
         function (quotes) {
           vm.quotes = quotes;
-        })
+        });
     };
 
 

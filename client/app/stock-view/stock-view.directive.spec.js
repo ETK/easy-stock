@@ -6,13 +6,13 @@ describe('Directive: stockView', function () {
   beforeEach(module('easyStockApp'));
   beforeEach(module('app/stock-view/stock-view.html'));
 
-  var element, scope;
+  var scope;
 
   beforeEach(inject(function ($rootScope) {
     scope = $rootScope.$new();
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
+  it('should make hidden element visible', inject(function () {
 
   }));
 });
